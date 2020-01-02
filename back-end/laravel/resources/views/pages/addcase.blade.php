@@ -6,101 +6,108 @@
     $clientnames= DB::table('client_table')->select('client_name')->where('lawyer_id',$user_id)->get();
     $result = json_decode($clientnames, true);
 ?>
-<div class="container">
-    <div class="jumbotron">
-        <form action="PagesController@store" method="POST">
-            <div class="form-group row">
-              <label for="caseno" class="col-sm-2 col-form-label">Case Number</label>
-              <div class="col-sm-10">
+<main class="page contact-us-page">
+  <section class="clean-block clean-form dark">
+  <div class="container">
+    <div class="block-heading">
+      <h2 class="text-info">Add Case</h2>
+  </div>
+        <form action="/cases/add" method="POST">
+          @csrf
+            <div class="form-group ">
+              <label for="caseno" class=" col-form-label">Case Number</label>
+              
                 <input type="text" class="form-control" id="caseno" name="caseno" placeholder="Case Number">
-              </div>
+              
             </div>
-            <div class="form-group row">
-                <label for="clientname" class="col-sm-2 col-form-label">Client Name</label>
-                <div class="col-sm-10">
+            <div class="form-group ">
+                <label for="clientname" class=" col-form-label">Client Name</label>
+                
                     <select class="form-control" id="clientname" name="clientname">
                         @foreach ($result as $name)
                         <option>{{$name['client_name']}} </option>
                         @endforeach
                     </select>
-                </div>
+                
             </div> 
-              <div class="form-group row">
-                <label for="judgename" class="col-sm-2 col-form-label">Judge Name</label>
-                <div class="col-sm-10">
+              <div class="form-group ">
+                <label for="judgename" class=" col-form-label">Judge Name</label>
+                
                   <input type="text" class="form-control" id="judgename" name="judgename" placeholder="Judge Name">
-                </div>
+                
               </div>
-              <div class="form-group row">
-                <label for="courttype" class="col-sm-2 col-form-label">Court Type</label>
-                <div class="col-sm-10">
+              <div class="form-group ">
+                <label for="courttype" class=" col-form-label">Court Type</label>
+                
                   <input type="text" class="form-control" id="courttype" name="courttype" placeholder="Court Type">
-                </div>
+                
               </div>
-              <div class="form-group row">
-                <label for="category" class="col-sm-2 col-form-label">Category</label>
-                <div class="col-sm-10">
+              <div class="form-group ">
+                <label for="category" class=" col-form-label">Category</label>
+                
                     <select class="form-control" id="category" name="category">
                         <option>Civil</option>
                         <option>Criminal</option>
                         <option>Intellectual Property</option>
                     </select>
-                </div>
+                
               </div>
-              <div class="form-group row">
-                <label for="casemembers" class="col-sm-2 col-form-label">Case Members</label>
-                <div class="col-sm-10">
+              <div class="form-group ">
+                <label for="casemembers" class=" col-form-label">Case Members</label>
+                
                   <input type="number" class="form-control" id="casemembers" name="casemembers" placeholder="Case Members">
-                </div>
+                
               </div>
-              <div class="form-group row">
-                <label for="status" class="col-sm-2 col-form-label">Case Status</label>
-                <div class="col-sm-10">
+              <div class="form-group ">
+                <label for="status" class=" col-form-label">Case Status</label>
+                
                     <select class="form-control" id="status" name="status">
                         <option>Pending</option>
                         <option>In Progress</option>
                         <option>Closed</option>
                         <option>Cancelled</option>
                     </select>
-                </div>
+                
               </div>
-              <div class="form-group row">
-                <label for="filingdate" class="col-sm-2 col-form-label">Filing Date</label>
-                <div class="col-sm-10">
+              <div class="form-group ">
+                <label for="filingdate" class=" col-form-label">Filing Date</label>
+                
                   <input type="date" class="form-control" id="filingdate" name="filingdate">
-                </div>
+                
               </div>
-              <div class="form-group row">
-                <label for="opponent" class="col-sm-2 col-form-label">Opponent Details</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="opponent" name="opponent" rows="2"></textarea>
-                </div>
+              <div class="form-group ">
+                <label for="opponent" class=" col-form-label">Opponent Details</label>
+                
+                    <textarea class="form-control" id="opponent" name="opponent" ></textarea>
+                
               </div>
-              <div class="form-group row">
-                <label for="description" class="col-sm-2 col-form-label">Description</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                </div>
+              <div class="form-group ">
+                <label for="description" class=" col-form-label">Description</label>
+                
+                    <textarea class="form-control" id="description" name="description"></textarea>
+                
               </div>
-              <div class="form-group row">
-                <label for="summary" class="col-sm-2 col-form-label">Summary</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="summary" name="summary" rows="2"></textarea>
-                </div>
+              <div class="form-group ">
+                <label for="summary" class=" col-form-label">Summary</label>
+                
+                    <textarea class="form-control" id="summary" name="summary" ></textarea>
+                
               </div>
              
-              <div class="form-group row">
-                <label for="background" class="col-sm-2 col-form-label">Background</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="background" name="background" rows="2"></textarea>
-                </div>
+              <div class="form-group ">
+                <label for="background" class=" col-form-label">Background</label>
+                
+                    <textarea class="form-control" id="background" name="background" ></textarea>
+                
               </div>
-            <div class="form-group row">
-              <div class="col-sm-10">
+            <div class="form-group ">
+              
                 <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
+              
             </div>
           </form>
-    </div>
+    
 </div>
+</section>
+</main>
 @endsection

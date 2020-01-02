@@ -1,64 +1,59 @@
-<div class="container">
-    <div class="jumbotron">
-        <h1 class="display-4 d-flex justify-content-center">Welcome to Portal, {{ Auth::user()->name}}</h1>
-        <div class="row d-flex justify-content-center" style="margin-top:60px">
-            <div class="col-sm d-flex justify-content-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Case Requests</h5>
-                      <p class="card-text">View all case related clients' requests</p>
-                      <a href="/inbox" class="btn btn-primary">Inbox</a>
-                    </div>
+<main class="page service-page" >
+  <section class="clean-block clean-services dark" >
+      <div class="container" >
+          <div class="block-heading">
+              <h2 class="text-info">Dashboard</h2>
+          </div>
+          <div class="row">
+              <div class="col-md-6 col-lg-4">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="card-title">Case Requests</h4><i class="fa fa-briefcase" style="font-size: 30px;margin: 10px 0 30px 0 ;"></i>
+                          <p class="card-text">View all case related clients' requests.</p>
+                      </div>
+                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
                   </div>
-            </div>
-            <div class="col-sm d-flex justify-content-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Important Docs</h5>
-                      <p class="card-text">View all the documents</p>
-                      <a href="/docs" class="btn btn-primary">Documents</a>
-                    </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="card-title">Important Docs</h4><i class="material-icons" style="font-size: 30px;margin: 10px 0 30px 0 ;">find_in_page</i>
+                          <p class="card-text">View all the documents.</p>
+                      </div>
+                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
                   </div>
-            </div>
-            <div class="col-sm d-flex justify-content-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Lawbook</h5>
-                      <p class="card-text">Read Lawbook here.</p>
-                      <a href="/lawbook" class="btn btn-primary">Read</a>
-                    </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="card-title">Lawbook</h4><i class="fa fa-book" style="font-size: 30px;margin: 10px 0 30px 0 ;"></i>
+                          <p class="card-text">Read Lawbook here.</p>
+                      </div>
+                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
                   </div>
-            </div>
-        </div>
-        <div class="row d-flex justify-content-center" style="margin-top:40px">
-            <div class="col-sm d-flex justify-content-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">History</h5>
-                      <p class="card-text">History of previous cases </p>
-                      <a href="/cases/history" class="btn btn-primary">Check</a>
-                    </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="card-title">History</h4><i class="material-icons" style="font-size: 30px;margin: 10px 0 30px 0 ;">message</i>
+                          <p class="card-text">History of previous cases.</p>
+                      </div>
+                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
                   </div>
-            </div>
-            <div class="col-sm d-flex justify-content-center">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Current Case</h5>
-                      <p class="card-text">Go to the current case.</p>
-                      <a href="/cases/current" class="btn btn-primary">Go</a>
-                    </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="card-title">Current Case</h4><i class="fa fa-briefcase" style="font-size: 30px;margin: 10px 0 30px 0 ;"></i>
+                          <p class="card-text">Go to the current case.</p>
+                      </div>
+                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
                   </div>
-            </div>
-            <div class="col-sm d-flex justify-content-center" >
-                <div class="card" style="width: 18rem; display:none">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                  </div>
-            </div>
-        </div>
-    </div>
-  
-  </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                  <div class="card"></div>
+              </div>
+          </div>
+      </div>
+  </section>
+</main>
