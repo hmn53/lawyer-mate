@@ -27,6 +27,9 @@
             background-image: url("/public/images/photo.jpg")
         }
 </style>    --}}
+    {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> --}}
+    {{-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous"> --}}
+    {{-- <link rel="stylesheet" href="{{asset('css/bootstrap-notifications.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     {{-- <link rel="stylesheet" href="{{asset('css/bootstrap2.min.css')}}"> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
@@ -38,6 +41,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
     <link rel="stylesheet" href="{{asset('css/smoothproducts.css')}}">
+    <link rel="stylesheet" href="{{asset('css/notification.css')}}">
+    {{-- <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script> --}}
+
   
 </head>
 <body>
@@ -46,9 +53,11 @@
             @yield('content')
         
     <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="{{asset('js/smoothproducts.min.js')}}"></script>
     <script src="{{asset('js/theme.js')}}"></script>
+    
 </body>
 </html>

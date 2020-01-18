@@ -11,7 +11,7 @@
                           <h4 class="card-title">Case Requests</h4><i class="fa fa-briefcase" style="font-size: 30px;margin: 10px 0 30px 0 ;"></i>
                           <p class="card-text">View all case related clients' requests.</p>
                       </div>
-                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                      <div><a class="btn btn-outline-primary margin-a"href="/inbox" type="button">View</a></div>
                   </div>
               </div>
               <div class="col-md-6 col-lg-4">
@@ -20,7 +20,7 @@
                           <h4 class="card-title">Important Docs</h4><i class="material-icons" style="font-size: 30px;margin: 10px 0 30px 0 ;">find_in_page</i>
                           <p class="card-text">View all the documents.</p>
                       </div>
-                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                      <div><a class="btn btn-outline-primary margin-a" href="/docs" type="button">View</a></div>
                   </div>
               </div>
               <div class="col-md-6 col-lg-4">
@@ -29,7 +29,7 @@
                           <h4 class="card-title">Lawbook</h4><i class="fa fa-book" style="font-size: 30px;margin: 10px 0 30px 0 ;"></i>
                           <p class="card-text">Read Lawbook here.</p>
                       </div>
-                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                      <div><a class="btn btn-outline-primary margin-a" href="/lawbook">View</a></div>
                   </div>
               </div>
               <div class="col-md-6 col-lg-4">
@@ -38,7 +38,7 @@
                           <h4 class="card-title">History</h4><i class="material-icons" style="font-size: 30px;margin: 10px 0 30px 0 ;">message</i>
                           <p class="card-text">History of previous cases.</p>
                       </div>
-                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                      <div><a class="btn btn-outline-primary margin-a" href="/cases"type="button">View</a></div>
                   </div>
               </div>
               <div class="col-md-6 col-lg-4">
@@ -47,7 +47,7 @@
                           <h4 class="card-title">Current Case</h4><i class="fa fa-briefcase" style="font-size: 30px;margin: 10px 0 30px 0 ;"></i>
                           <p class="card-text">Go to the current case.</p>
                       </div>
-                      <div><button class="btn btn-outline-primary btn-sm" type="button">View</button></div>
+                      <div><a class="btn btn-outline-primary margin-a" href="/cases" type="button">View</a></div>
                   </div>
               </div>
               <div class="col-md-6 col-lg-4">

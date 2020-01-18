@@ -47,9 +47,38 @@
                         
                     @endguest
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item dropdown dropdown-notifications">
                     @auth
-                    <a class="nav-link " href="/inbox">inbox</a>
+                    {{-- <a class="nav-link " href="/inbox">inbox</a> --}}
+                        
+                    <div class="dropdown" style="float: right;margin-top:7px;">
+                        <a href="#" onclick="return false;" role="button" data-toggle="dropdown" id="dropdownMenu1" data-target="#" style="float: left" aria-expanded="true">
+                            <i class="fa fa-bell-o" style="font-size: 20px; float: left;color:darkslategray">
+                            </i>
+                        </a>
+                        <span class="badge">0</span>
+                        <ul class="dropdown-menu dropdown-menu-left pull-right" role="menu" aria-labelledby="dropdownMenu1">
+                            <ul class="timeline timeline-icons timeline-sm" style="margin:6px;width:210px;list-style-type: none;">
+                            </ul>
+                        </ul>
+                    </div>
+                    {{-- <a href="#notifications-panel" id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" >
+                          <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
+                        </a>
+                        <div class="dropdown-container">
+                          <div class="dropdown-toolbar">
+                            <div class="dropdown-toolbar-actions">
+                              <a href="#">Mark all as read</a>
+                            </div>
+                            <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
+                          </div>
+                          <ul class="dropdown-menu">
+                          </ul>
+                          <div class="dropdown-footer text-center">
+                            <a href="#">View All</a>
+                          </div>
+                        </div> --}}
+                    
                     @endauth
                     @guest
                         

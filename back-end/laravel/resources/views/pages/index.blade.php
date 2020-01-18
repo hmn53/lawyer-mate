@@ -8,7 +8,7 @@
                 <div class="text">
                         <h2>Web Portal for Lawyers</h2>
                         <p>Get started now.</p>
-                        <button class="btn btn-outline-light btn-lg" type="button">Register</button>
+                        <button class="btn btn-outline-light btn-lg" type="button"><a href="/register" style="text-decoration: none; color:white;">Register</a></button>
                 </div>
         </section>
 </main>

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,8 @@ Route::get('/lawbook','PagesController@lawbook');
 Route::get('/services','PagesController@services');
 Auth::routes();
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/reminder', 'PagesController@reminder');
+Route::post('/reminder', 'PagesController@storeReminder');
 Route::get('/profile', 'PagesController@profile');
 Route::get('/home', function () {
     return redirect('/dashboard');
@@ -38,5 +41,10 @@ Route::get('/cases', 'PagesController@cases');
 Route::get('/cases/current', 'PagesController@currentcases');
 Route::get('download/{path}', function ($path) {
     return response()->download(storage_path('app/docs/' . $path));
+});
+Route::get('/test', function () {
+    event(new App\Events\ReminderAdded(auth()->user()->id,auth()->user()->name,'Appointment',auth()->user()->type,'TEST DESCRIPTION',Carbon::now()->toDateTimeString()));
+    //return "Event has been sent!";
+    return redirect('/dashboard');
 });
 
