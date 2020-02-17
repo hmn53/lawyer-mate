@@ -24,7 +24,7 @@
     <style>
         .container{margin-top: 50px;}
         body{
-            background-image: url("/public/images/photo.jpg")
+            background-image: url("/public/images/photo.jpg");
         }
 </style>    --}}
     {{-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"> --}}
@@ -51,13 +51,14 @@
         @include('includes/newnavbar')
             <?php
 			$user = auth()->user();
-			?>
+      ?>
 			@if (strcmp($user->type,"lawyer")==0)
 			    @include('includes.lawyer')
 			@else
 			    @include('includes.client')
 			    
 			@endif
+			
 			 
         
     <script src="{{asset('js/jquery.min.js')}}"></script>

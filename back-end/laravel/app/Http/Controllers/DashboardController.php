@@ -24,7 +24,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        
+        $user=auth()->user();
+        if(strcmp($user->type,"admin")==0)
+            return redirect('/admin');;
         return view('dashboard');
     }
 }

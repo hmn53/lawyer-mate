@@ -1,27 +1,16 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Web Portal for Lawyers</title>
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/bootstrap2.min.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <link rel="stylesheet" href="{{asset('css/smoothproducts.css')}}">
-</head>
-<body>
-  @include('includes/newnavbar')
+@extends('layouts/app')
   <?php
-  $user_id = auth()->user()->id;
-  $case_info = DB::table('case_table')->select('case_no')->where('lawyer_id',$user_id)->get();
+  $user = auth()->user();
+  $user_id = $user->id;
+  $userType = $user->type;
+  if(strcmp($userType,"lawyer")==0){
+    $case_info = DB::table('case_table')->select('case_no')->where('lawyer_id',$user_id)->get();
+  }else{
+    $case_info = DB::table('case_table')->select('case_no')->where('client_id',$user_id)->get();
+  }
   $result1 = json_decode($case_info, true);
 ?>
-
+@section('content')
 <main class="page contact-us-page">
     <section class="clean-block clean-form dark">
     <div class="container">
@@ -66,12 +55,4 @@
   </div>
   </section>
   </main>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-    <script src="{{asset('js/smoothproducts.min.js')}}"></script>
-    <script src="{{asset('js/theme.js')}}"></script>
-</body>
-
-</html>
+  @endsection

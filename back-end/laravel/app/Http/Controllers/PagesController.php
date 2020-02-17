@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Events\ReminderAdded;
 use App\CaseTable;
+use App\CustomUser;
 use App\Doc;
 use App\Reminder;
 use App\Client;
@@ -51,6 +52,15 @@ class PagesController extends Controller
 
     public function cases(){
         return view('pages/cases');
+    }
+
+    public function home(){
+        $user = auth()->user();
+        if(strcmp($user->type,"admin")==0){
+            return view('pages/admin');
+        }
+        else
+            return view('pages/dashboard');
     }
 
     public function currentcases(){
@@ -139,5 +149,99 @@ class PagesController extends Controller
     public function profile()
     {
         return view('pages/profile');
+    }
+
+    //admin
+    public function addAdmin(Request $request){
+        $var = new CustomUser;
+        $var->name=$request->input('name');
+        $var->email = $request->input('email');
+        $var->password= $request->input('password');
+        $var->type = $request->input('type');
+        $var->save();
+        return redirect('/admin');
+    }
+    public function addAdminCase(Request $request){
+        $var = new CaseTable;
+        $var->case_no=$request->input('caseno');
+        $var->lawyer_id = $request->input('lawyerid');
+        $var->client_id= $request->input('clientid');
+        $var->judge_name= $request->input('judgename');
+        $var->court_type = $request->input('courttype');
+        $var->category = $request->input('category');
+        $var->case_members = $request->input('casemembers');
+        $var->status = $request->input('status');
+        $var->date_of_filing = $request->input('filingdate');
+        $var->opponent = $request->input('opponent');
+        $var->description = $request->input('description');
+        $var->summary = $request->input('summary');
+        $var->background = $request->input('background');
+        $var->save();
+        return redirect('/admin');
+    }
+    public function addAdminClient(Request $request){
+        $var = new Client;
+        $var->client_name=$request->input('clientname');
+        $var->lawyer_id = $request->input('lawyerid');
+        $var->client_id= $request->input('clientid');
+        $var->lawyer_name= $request->input('lawyername');
+        $var->case_id=$request->input('caseid');
+        $var->save();
+        return redirect('/admin/clients');
+    }
+    public function addAdminDoc(Request $request){
+        $request->validate([
+            'caseno' => 'required',
+            'description' => 'required',
+            'docname' => 'required',
+            'doc' => 'file|max:1999',
+        ]);
+        $var = new Doc;
+        $var->upload_by = $request->input('id');
+        $var->case_id = $request->input('caseno');
+        $var->document_name = $request->input("docname");
+        $var->description = $request->input("description");
+        //$var->upload_on = $date;
+        $var->path = $request->doc->getClientOriginalName();
+        $var->save();
+        $path= $request->doc->storeAs('docs', $request->doc->getClientOriginalName());
+        return redirect('/admin/docs');
+
+    }
+    public function addAdminReminder(Request $request){
+        $var = new Reminder;
+        $var->user_id = $request->input('id');
+        $var->case_no = $request->input('case_no');
+        $var->description = $request->input('description');
+        $var->remind_date = $request->input('reminddate');
+        $var->type = $request->input('type');
+        $var->save();
+        return redirect('/admin/reminder');
+    }
+
+    public function deleteAdmin(Request $request,$id){
+        $user = CustomUser::find($id);
+        $user->delete();
+        return redirect('/admin');
+    }
+    public function deleteCase(Request $request,$id){
+        $case = CaseTable::find($id);
+        $case->delete();
+        return redirect('/admin/cases');
+    }
+    public function deleteClient(Request $request,$id){
+        $client = Client::find($id);
+        $client->delete();
+        return redirect('/admin/clients');
+    }
+    public function deleteDoc(Request $request,$id){
+        $doc = Doc::find($id);
+        $doc->delete();
+        return redirect('/admin/docs');
+    }
+    public function deleteReminder(Request $request,$id){
+        $doc = Reminder::find($id);
+        $doc->delete();
+        return redirect('/admin/reminder');
     }
 }

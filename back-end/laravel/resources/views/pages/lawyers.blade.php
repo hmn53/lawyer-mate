@@ -1,41 +1,17 @@
 @extends('layouts/app')
 <?php
+    use App\Client;
   $user_id = auth()->user()->id;
-  $client = DB::table('clients_table')->select('*')->where('lawyer_id',$user_id)->get();
-  $result = json_decode($client, true);
+  $lawyers = Client::where('client_id',$user_id)->get();
+  $result = json_decode($lawyers, true);
   $count=0;
 ?>
 @section('content')
-{{-- <div class="container">
-    <div class="jumbotron">
-        <table class="table" style="text-align: center">
-            <thead>
-              <tr>
-                <th scope="col">Client Name</th>
-                <th scope="col">Case Number</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-                @foreach ($result as $info)
-                <tr>
-                  <td>{{$info['client_name']}}</td>
-                  @if ($info['case_id']=="")
-                    <td>null</td>
-                  @else
-                    <td>{{$info['case_id']}}</td>
-                  @endif
-                </tr>
-                @endforeach
-              
-            </tbody>
-          </table>
-    </div>
-</div> --}}
+
 <div id="content" style="margin-top:100px">
   <div class="container">
     <div class="card-header py-3" style="background-color:#D0D3D4 ">
-      <p class="text-primary m-0 font-weight-bold">Clients</p>
+      <p class="text-primary m-0 font-weight-bold">Lawyers</p>
   </div>
   <div class="card-body" style="background-color:#ECF0F1">
     <div class="row">
@@ -51,7 +27,7 @@
             <thead>
                 <tr>
                     
-                    <th>Client Name</th>
+                    <th>Lawyer Name</th>
                     <th>Case Number</th>
                     
                 </tr>
@@ -59,7 +35,7 @@
             <tbody> 
               @foreach ($result as $info)
               <tr>
-                <td>{{$info['client_name']}}</td>
+                <td>{{$info['lawyer_name']}}</td>
                 @if ($info['case_id']=="")
                   <td>null</td>
                 @else
@@ -76,7 +52,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 align-self-center">
-            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing {{$count}} to 10 </p>
+            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing {{$count}} of {{$count}} </p>
         </div>
         
     </div>

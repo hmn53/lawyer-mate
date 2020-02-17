@@ -1,33 +1,46 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Web Portal for Lawyers</title>
-    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/bootstrap2.min.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <link rel="stylesheet" href="{{asset('css/smoothproducts.css')}}">
-</head>
-<body>
-  @include('includes/newnavbar')
+@extends('layouts/app')
   <?php
-  $user_id = auth()->user()->id;
+  use App\CaseTable;
+  use App\Client;
+  use App\CustomUser;
+  $user = auth()->user();
+  $user_id = $user->id;
+  $userType = $user->type;
     $clientnames= DB::table('client_table')->select('client_name')->where('lawyer_id',$user_id)->get();
     $result1 = json_decode($clientnames, true);
 ?>
 <?php
-  
-  $case_info = DB::table('case_table')->select('*')->where('lawyer_id',$user_id)->get();
-  $clients_name = DB::table('client_table')->select('client_name')->where('lawyer_id',$user_id)->get();
-  $result = json_decode($case_info, true);
+  if(strcmp($userType,"lawyer")==0){
+    $case_info = DB::table('case_table')->select('*')->where('lawyer_id',$user_id)->get();
+    //$clients_name = DB::table('client_table')->select('client_name')->where('lawyer_id',$user_id)->get();
+    $result = json_decode($case_info, true);
+  }else{
+    $case_info = CaseTable::where('client_id',$user_id)->get();
+    $result = json_decode($case_info, true);
+  }
+ 
   $count=0;
 ?>
+@section('content')
+
+<div class="modal fade" id="descModal" role="dialog">
+  <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Description</h4>
+          </div>
+          <div class="modal-body">
+                Hi
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
 <div class="modal fade" role="dialog" id="myModal">
   <div class="modal-dialog">
 <div class="modal-content">
@@ -141,7 +154,12 @@
 <div id="content" style="margin-top:100px">
   <div class="container">
     <div class="card-header py-3" style="background-color:#D0D3D4;">
+      @if (strcmp($userType,"lawyer")==0)
       <p class="text-primary m-0 font-weight-bold">Cases <span style="margin-bottom:5px;padding:0;justify-content:center" class="float-right"><button class="btn btn-primary"style="margin:0;padding:0"data-toggle="modal" data-target="#myModal"><a style="margin:0;padding:0 20px 0 20px" class="btn btn-primary" type="button">Add</a></button></span></p>
+      @else
+      <p class="text-primary m-0 font-weight-bold">Cases </p>
+      @endif
+      
       
   </div>
   
@@ -159,7 +177,12 @@
                     <thead>
                         <tr>
                             <th>Case Number</th>
-                            <th>Client Name</th>
+                            @if (strcmp($userType,"lawyer")==0)
+                              <th>Client Name</th>
+                            @else
+                              <th>Lawyer Name</th>
+                            @endif
+                            
                             <th>Description</th>
                             <th>Case Category</th>
                             <th>Case Status</th>
@@ -169,18 +192,30 @@
                     <tbody> 
                         <tr>
                           @foreach ($result as $info)
-                    
+                          
                           <td>{{$info['case_no']}} </td>
-                          <?php $client_name = DB::table('client_table')->select('client_name')->where('client_id',$info['client_id'])->get();
-                           $name = json_decode($client_name,true); ?>
-                          @foreach ($name as $item)
-                            <td>{{$item['client_name']}} </td>
-                          @endforeach
-                          <td>{{$info['description']}} </td>
+                          @if (strcmp($userType,"lawyer")==0)
+                            <?php $client_name = DB::table('client_table')->select('client_name')->where('client_id',$info['client_id'])->get();
+                            $name = json_decode($client_name,true); ?>
+                            @foreach ($name as $item)
+                              <td>{{$item['client_name']}} </td>
+                            @endforeach
+                         
+                          @else
+                            <?php $lawyer_name = CustomUser::select('name')->where('id',$info['lawyer_id'])->get();
+                              ?>
+                            @foreach ($lawyer_name->all() as $item)
+                              <td>{{$item['name']}} </td>
+                              
+                            @endforeach
+                          @endif
+                         
+                          <td><a href="/cases/show/{{$info['id']}}">{{$info['description']}} </a></td>
                           <td>{{$info['category']}} </td>
                           <td>{{$info['status']}} </td>
                           <td>{{$info['date_of_filing']}}</td>
                           <?php $count+=1; ?>
+                          
                       @endforeach
                         </tr>
                     </tbody>
@@ -188,7 +223,7 @@
             </div>
             <div class="row">
               <div class="col-md-6 align-self-center">
-                  <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing {{$count}} to 10 </p>
+                  <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing {{$count}} of {{$count}} </p>
               </div>
               
           </div>
@@ -197,11 +232,5 @@
 </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
-    <script src="{{asset('js/smoothproducts.min.js')}}"></script>
-    <script src="{{asset('js/theme.js')}}"></script>
-</body>
 
-</html>
+@endsection

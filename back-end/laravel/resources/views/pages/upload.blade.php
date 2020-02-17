@@ -19,7 +19,7 @@
   <section class="clean-block clean-form dark">
   <div class="container">
     <div class="block-heading">
-      <h2 class="text-info">Add Case</h2>
+      <h2 class="text-info">Upload Docs</h2>
   </div>
         <form action="/docs/upload" method="POST" enctype="multipart/form-data">
           @csrf

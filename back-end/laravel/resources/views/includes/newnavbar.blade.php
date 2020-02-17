@@ -1,3 +1,16 @@
+<?php
+if(Auth::check()){
+    $user = auth()->user();
+    $userType = "client";
+    // if(Auth::guest())
+    //     return redirect('/');
+
+    if (strcmp($user->type,"lawyer")==0)
+        $userType = "lawyer";
+}
+			
+?>
+
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
     <div class="container"><a class="navbar-brand logo" href="#">Web Portal for Lawyers</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div
@@ -14,7 +27,10 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     @auth
-                        <a class="nav-link " href="/cases">cases</a>
+                        
+                            <a class="nav-link " href="/cases">cases</a>
+                       
+                        
                     @endauth
                     @guest
                         
@@ -22,7 +38,12 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     @auth
+                    @if (strcmp($user->type,"lawyer")==0)
                     <a class="nav-link " href="/clients">clients</a>
+                    @else
+                    <a class="nav-link " href="/lawyers">lawyers</a>
+                    @endif
+                    
                     @endauth
                     @guest
                         
