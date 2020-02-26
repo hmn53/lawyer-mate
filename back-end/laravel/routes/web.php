@@ -9,6 +9,7 @@ use App\CustomUser;
 use App\Appointment;
 use App\Directory;
 use App\Notifications\ReminderNotifications;
+use App\LawyerProfile;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -157,6 +158,17 @@ Route::get('/appointment/unaccept/{id}', function ($id) {
     $updateApp->accepted = "rejected";
     $updateApp->save();
     return redirect('/dashboard');
+});
+
+//profile
+Route::get('/profile/update/{id}', function ($id) {
+    $profile = LawyerProfile::find($id);
+    return view('pages.updateProfile')->with('profile',$profile);
+});
+Route::post('/update/profile/{id}','PagesController@updateprofile');
+Route::get('/show/profile/{id}',function($id){
+    $profile = LawyerProfile::find($id);
+    return view('pages.showProfile')->with('profile',$profile);
 });
 
 //admin

@@ -125,9 +125,10 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
       </div> --}}
       
         <div class="col-sm-6">
-          <div class="card" style="height:200px;">
+          <div class="card" style="height:auto;">
+            <div class="card-header" style="font-size:22px">Reminders</div>
             <div class="card-body" style="text-align:justify;">
-              <h5 class="card-title">Reminders</h5>
+
               <div class="card-text">
                 @foreach ($reminders->all() as $item)
                 <?php
@@ -156,33 +157,39 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="card" style="height:200px;">
+          <div class="card" style="height:auto;">
+            <div class="card-header" style="font-size:22px">Appointments</div>
             <div class="card-body" style="text-align:justify;">
-              <h5 class="card-title">Appointments</h5>
+             
               <div class="card-text">
                 @foreach ($appointments as $item)
+                @if (strcmp($item['accepted'],"rejected")!=0)
                 <?php 
                   $client = CustomUser::find($item->user_id);
                   $clientName = $client->name;
                 ?>
                 <div class="row">
                   @if (strcmp($item['accepted'],"pending")==0)
-                    <div class="col-md-10 product-info" style="margin-left:30px">{{$item['description']}}
+                    <div class="col-md-10 product-info" style="margin-left:30px">{{$item['title']}}
                   @endif
                   @if (strcmp($item['accepted'],"accepted")==0)
-                    <div class="col-md-10 product-info" style="margin-left:30px ; color:limegreen">{{$item['description']}} 
+                    <div class="col-md-10 product-info" style="margin-left:30px ; color:limegreen">{{$item['title']}} 
                   @endif
+                  
                   <div class="product-specs" style="font-size:0.85em; color:black">
+                  <div><span>Description :&nbsp;</span><span class="value">{{$item['description']}}</span></div>
                   <div><span>Client :&nbsp;</span><span class="value">{{$clientName}}</span></div>
                   <div><span>Date:&nbsp;</span><span class="value">{{$item['date']}}</span></div>
                   @if (strcmp($item['accepted'],"pending")==0)
                   <a href="/appointment/accept/{{$item['id']}}" style="color: rgb(0,123,255);"><button class="btn btn-success btn-sm">	✓ </button></a>
                   <a href="/appointment/unaccept/{{$item['id']}}" style="color: rgb(0,123,255);"><button class="btn btn-danger btn-sm">	✕ </button></a>
-                @endif
+                  @endif
+                
                   </div>
                   </div>
                 </div>
-                
+                <hr>
+                @endif
                 @endforeach
                 
               </div>

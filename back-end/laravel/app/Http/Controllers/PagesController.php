@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Auth;
 use App\Appointment;
 use App\Directory;
+use App\LawyerProfile;
 
 class PagesController extends Controller
 {
@@ -330,4 +331,32 @@ class PagesController extends Controller
         }
 
 }
+
+    //profile
+    public function updateprofile(Request $request,$id){
+        $pro = LawyerProfile::where('user_id',$id)->get();
+        foreach($pro->all() as $p){
+            $p->delete();
+        }
+            $profile = new LawyerProfile;
+            $profile->user_id = $id;
+            $profile->city=$request->input('city');
+            $profile->office_address=$request->input('office_address');
+            $profile->office_phone=$request->input('office_phone');
+            $profile->achievements=$request->input('achievements');
+            $profile->mobile_phone=$request->input('mobile');
+            $profile->long_description=$request->input('description');
+            $profile->gender=$request->input('gender');
+            $profile->birth_date=$request->input('birthdate');
+            $profile->website=$request->input('website');
+            $areas = $request->input('practice');
+            $str ="";
+            foreach($areas as $area){
+                $str=$str.$area . "\n";
+            }
+            $profile->area=$str;
+            $profile->save();
+        
+        return redirect('/profile');
+   }
 }

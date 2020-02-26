@@ -11,7 +11,7 @@
 
     {{-- <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -45,19 +45,166 @@
     {{-- <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script> --}}
 
-  
+
 </head>
 <body>
         {{-- @include('includes/navbar') --}}
         @include('includes/newnavbar')
+        <?php
+          use App\Directory;
+        ?>
             @yield('content')
-        
+
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="//js.pusher.com/3.1/pusher.min.js"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="{{asset('js/smoothproducts.min.js')}}"></script>
     <script src="{{asset('js/theme.js')}}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @if (Auth::check())
+      <script type="text/javascript">
+      var notificationsWrapper   = $('.dropdown-notifications');
+      var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+      var notificationsCountElem = $(".badge");
+      var notificationsCount     = parseInt(notificationsCountElem.text());
+      var notifications          = notificationsWrapper.find('ul.timeline');
+    //   localStorage.setItem('notifications',"");
+    //   localStorage.setItem('count',"0");
+      if(localStorage.getItem('notifications')){
+        notifications.html(localStorage.getItem('notifications'));
+        notificationsCount = parseInt(localStorage.getItem('count'));
+        notificationsCountElem.text(notificationsCount);
+      }else{
+        notificationsWrapper.hide();
+      }
+      //console.log(localStorage.getItem('count'));
+     function classChange(){
+      if (notificationsCount <= 0) {
+        //notificationsWrapper.hide();
+        notificationsCountElem.addClass("badge-success");
+      }else{
+        notificationsCountElem.addClass("badge-danger");
+      }
+     }
+     classChange();
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+
+      var pusher = new Pusher('0310106227f73c35189b', {
+        cluster: 'ap2',
+        encrypted:true,
+        forceTLS: true
+      });
+
+      // Subscribe to the channel we specified in our Laravel Event
+      var user = <?php echo auth()->user()->id ; ?>;
+      var channel = pusher.subscribe('reminder-added-'+user);
+      var description;
+      console.log('reminder-added-'+user);
+
+      // Bind a function to a Event (the full Laravel class)
+      channel.bind('App\\Events\\ReminderAdded', function(data) {
+        var existingNotifications = notifications.html();
+        this.description = data.description;
+        console.log(data);
+        var newNotificationHtml = `
+          <li class="notification active">
+              <div class="media">
+                <div class="media-body">
+                  <strong class="notification-title"><a class="title-not" style="text-decoration: none; color:grey"href="#" id="onclick">`+data.message+`</a></strong>
+                  <!--p class="notification-desc">Extra description can go here</p-->
+                  <div class="notification-meta">
+                    <small class="timestamp">`+data.date+`</small>
+                  </div>
+                </div>
+              </div
+  >
+          </li>
+        `;
+
+        notifications.html(newNotificationHtml + existingNotifications);
+
+        notificationsCount += 1;
+        notificationsCountElem.text("");
+        notificationsCountElem.text(notificationsCount);
+        classChange();
+        //notificationsWrapper.find('.notif-count').text(notificationsCount);
+        notificationsWrapper.show();
+        localStorage.setItem("notifications", notifications.html());
+        localStorage.setItem('count',notificationsCount);
+        $('.title-not').css("color", "black");
+        $(document).on("click","#onclick",function(){
+     //alert(data.description);
+     swal("Reminder",description, "info");
+     $('.title-not').css("color", "grey");
+     if(notificationsCount>0)
+     {
+       notificationsCount -=1;
+       notificationsCountElem.text("");
+            notificationsCountElem.text(notificationsCount);
+       localStorage.setItem('count',notificationsCount);
+       classChange();
+      }
+    });
+        console.log("Notify: "+localStorage.getItem('notifications'));
+
+      });
+
+    </script>
+
+    @endif
+
+    // {{-- <script>
+    //     $( '.navbar .container .navbar-collapse .navbar-nav li' ).on( 'click', function () {
+    //         $( '.navbar .container .navbar-collapse .navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
+    //         $( this ).parent( 'li' ).addClass( 'active' );
+    //     });
+    // </script> --}}
+    <script>
+        $(document).ready(function() {
+        var pathname = window.location.pathname;
+        $('.navbar-nav > li > a[href="'+pathname+'"]').parent().addClass('active');
+        console.log(pathname);
+        });
+        
+    </script>
     
+    <script>
+      $(document).ready(function() {
+        var showChar = 200;
+        var ellipsestext = "......";
+        var moretext = "show more";
+        var lesstext = "show less";
+        $('.more').each(function() {
+          var content = $(this).html();
+
+          if(content.length > showChar) {
+
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar-1, content.length - showChar);
+
+            var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+            $(this).html(html);
+          }
+
+        });
+
+        $(".morelink").click(function(){
+          if($(this).hasClass("less")) {
+            $(this).removeClass("less");
+            $(this).html(moretext);
+          } else {
+            $(this).addClass("less");
+            $(this).html(lesstext);
+          }
+          $(this).parent().prev().toggle();
+          $(this).prev().toggle();
+          return false;
+        });
+      });
+    </script>
+
 </body>
 </html>

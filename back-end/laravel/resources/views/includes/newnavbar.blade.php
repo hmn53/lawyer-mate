@@ -8,32 +8,38 @@ if(Auth::check()){
     if (strcmp($user->type,"lawyer")==0)
         $userType = "lawyer";
 }
-			
-?>
 
+?>
+<script>
+    var pathname = window.location.pathname;
+    document.cookie = "myJavascriptVar = " + pathname;
+</script>
 <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-    <div class="container"><a class="navbar-brand logo" href="#">Web Portal for Lawyers</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <div class="container"><a class="navbar-brand logo" href="#"><img src="{{ asset('images/logo.png') }}" style="margin-right:10px !important;" alt="Logo" height="50" width="50">Web Portal for Lawyers</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div
             class="collapse navbar-collapse" id="navcol-1">
-            <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item active" role="presentation">
-                    @auth
+            <ul class="nav navbar-nav ml-auto" style="">
+                <li class="nav-item" role="presentation">
+
+                        @auth
                         <a class="nav-link " href="/dashboard">Home</a>
-                    @endauth
-                    @guest
-                        <a class="nav-link" href="/">Home</a>
-                    @endguest
-                    
+                        @endauth
+                        @guest
+                            <a class="nav-link active" href="/">Home</a>
+                        @endguest
+
+
+
                 </li>
                 <li class="nav-item" role="presentation">
                     @auth
-                        
+
                             <a class="nav-link " href="/cases">cases</a>
-                       
-                        
+
+
                     @endauth
                     @guest
-                        
+
                     @endguest
                 </li>
                 <li class="nav-item" role="presentation">
@@ -43,35 +49,47 @@ if(Auth::check()){
                     @else
                     <a class="nav-link " href="/lawyers">lawyers</a>
                     @endif
-                    
+
                     @endauth
                     @guest
-                        
+
                     @endguest
-                    
+
                 </li>
                 <li class="nav-item" role="presentation">
                     @auth
                     <a class="nav-link " href="/docs">docs</a>
                     @endauth
                     @guest
-                        
+
                     @endguest
-                    
+
                 </li>
                 <li class="nav-item" role="presentation">
-                    
+
                     @auth
+                    @if (strcmp($user->type,"lawyer")==0)
                     <a class="nav-link " href="/reminder">reminder</a>
+                    @else
+                    <a class="nav-link " href="/appointment">appointments</a>
+                    @endif
+
                     @endauth
                     @guest
-                        
+
                     @endguest
                 </li>
+                @auth
+                @if (strcmp($user->type,"lawyer")==0)
+                    <li class="nav-item" role="presentation">    
+                        <a class="nav-link " href="/lawbook">Lawbook</a>
+                    </li>
+                @endif
+                @endauth
                 <li class="nav-item dropdown dropdown-notifications">
                     @auth
                     {{-- <a class="nav-link " href="/inbox">inbox</a> --}}
-                        
+
                     <div class="dropdown" style="float: right;margin-top:7px;">
                         <a href="#" onclick="return false;" role="button" data-toggle="dropdown" id="dropdownMenu1" data-target="#" style="float: left" aria-expanded="true">
                             <i class="fa fa-bell-o" style="font-size: 20px; float: left;color:darkslategray">
@@ -99,12 +117,12 @@ if(Auth::check()){
                             <a href="#">View All</a>
                           </div>
                         </div> --}}
-                    
+
                     @endauth
                     @guest
-                        
+
                     @endguest
-                    
+
                 </li>
                 @guest
                     <li class="nav-item" role="presentation">
@@ -128,14 +146,14 @@ if(Auth::check()){
                          {{ __('Logout') }} --}}
                          </a>
                         </div>
-                       
+
                         <div class="btn-group d-flex justify-content-center" role="group" aria-label="....">
                          <a class=" nav-link dropdown-item" href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
                           Logout
                       </a>
-                      
+
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                           @csrf
                       </form>
@@ -143,7 +161,7 @@ if(Auth::check()){
                     </div>
                 </li>
                 @endguest
-               
+
             </ul>
     </div>
     </div>

@@ -3,13 +3,11 @@
     use App\LawyerProfile;
     $user = auth()->user();
     $user_id = $user->id;
-    
-      $profile = LawyerProfile::where('user_id',$user_id)->get();
+    if(!isset($profilerofile))
+        return redirect('/dashboard');
 ?>
 @section('content')
-@if (count($profile)==0)
-    @include('pages.updateProfile');
-@else
+
 <style>
         
     .header {
@@ -40,7 +38,7 @@
           box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
         }
         </style>
-        @foreach ($profile->all() as $p)
+        
     <div class="d-flex justify-content-center">  
         <div class="jumbotron w-75" style="margin-top:120px">
             <div class="container" >
@@ -57,7 +55,7 @@
                             <div class="form-group row">
                                 <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Description</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value=" {{$p->long_description}}">
+                                  <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value=" {{$profile->long_description}}">
                                 </div>
                               </div>
                               
@@ -76,7 +74,7 @@
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Areas</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->area}}">
+                          <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->area}}">
                         </div>
                       </div>
                       
@@ -88,31 +86,31 @@
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">City</label>
                         <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->city}}" >
+                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->city}}" >
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Gender </label>
                         <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->gender}}">
+                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->gender}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Birthdate  </label>
                         <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->birth_date}}">
+                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->birth_date}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Website </label>
                         <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->website}}">
+                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->website}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Mobile Number</label>
                         <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->mobile_phone}}">
+                        <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->mobile_phone}}">
                         </div>
                     </div>
                     
@@ -129,7 +127,7 @@
                             <div class="form-group row">
                                 <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Achievements</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->achievements}}">
+                                  <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->achievements}}">
                                 </div>
                               </div>
                               
@@ -144,21 +142,19 @@
                         <div class="form-group row">
                             <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Office address</label>
                             <div class="col-sm-9">
-                              <input type="email" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->office_address}}">
+                              <input type="email" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->office_address}}">
                             </div>
                           </div>
                           <div class="form-group row">
                             <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Office contact Num.</label>
                             <div class="col-sm-9">
-                              <input type="email" class="form-control form-control-lg" id="colFormLabelLg" value="{{$p->office_phone}}">
+                              <input type="email" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->office_phone}}">
                             </div>
                           </div>
                           
                     </fieldset>
                   </form>
-                  <button class="btn btn-primary"  ><a href="/profile/update/{{$p->id}}" style="color:white;text-decoration:none">Update Profile</a></button>
-                
-                  @endforeach
+                  
                 </div>
             </div>
         </div>
@@ -167,5 +163,5 @@
                
           
                 
-            @endif
+            
 @endsection

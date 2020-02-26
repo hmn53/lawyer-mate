@@ -8,7 +8,7 @@
 ?>
 @section('content')
 
-<div id="content" style="margin-top:100px">
+<div id="content" style="margin-top:190px">
   <div class="container">
     <div class="card-header py-3" style="background-color:#D0D3D4 ">
       <p class="text-primary m-0 font-weight-bold">Lawyers</p>

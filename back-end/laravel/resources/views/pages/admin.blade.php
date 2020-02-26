@@ -171,6 +171,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="{{asset('js/smoothproducts.min.js')}}"></script>
     <script src="{{asset('js/theme.js')}}"></script>
+    {{-- <script>
+          $('.nav-link').click(function (event) {
+        // Avoid the link click from loading a new page
+        event.preventDefault();
+
+        // Load the content from the link's href attribute
+        $('.content').load($(this).attr('href'));
+        });
+    </script> --}}
   
     
 </body>

@@ -14,7 +14,7 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -26,7 +26,7 @@ class DashboardController extends Controller
     {
         $user=auth()->user();
         if(strcmp($user->type,"admin")==0)
-            return redirect('/admin');;
+            return redirect('/admin');
         return view('dashboard');
     }
 }
