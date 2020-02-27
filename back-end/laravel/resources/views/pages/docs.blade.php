@@ -100,26 +100,32 @@
                                         }
                                         //echo $userName;
                                     ?>
-                                <tr>
+                                    @if (strcmp($i->verified,'rejected')!=0)
+                                    <tr>
                                     
-                                    <td>{{$i->case_id}}</td>
-                                    <td>{{$cnr_number}}</td>
-                                    <td>{{$userName}}</td>
-                                    <td>{{$category}}</td>
-                                    <td>{{$i->document_name}}</td>
-                                    <td>{{$i->description}}</td>
-                                    <td>{{$i->upload_by}}</td>
-                                    <td>{{$i->upload_on}}</td>
-                                    
-                                    <td><a href="epdf.pub_introduction-to-algorithms-third-edition.pdf"> Preview</a><br>
-                                    <a href="/download/{{$i['path']}}">   Download</a></td>
-                                    <td>
-                                        <a href="/docs/verify/{{$i['id']}}" style="color: rgb(0,123,255);"><button class="btn btn-success">&#10003;</button></a>
-                                        <a href="/docs/unverify/{{$i['id']}}" style="color: rgb(0,123,255);"><button class="btn btn-danger">&#10005;</button></a>
-                                   
-                                    
-                                    </td>
-                                </tr>
+                                      <td>{{$i->case_id}}</td>
+                                      <td>{{$cnr_number}}</td>
+                                      <td>{{$userName}}</td>
+                                      <td>{{$category}}</td>
+                                      <td>{{$i->document_name}}</td>
+                                      <td>{{$i->description}}</td>
+                                      <td>{{$i->upload_by}}</td>
+                                      <td>{{$i->upload_on}}</td>
+                                      <td>
+                                      <object data="{{$i['path']}}" type="application/pdf" width="100%" height="100%">
+                                        <a href="/view/{{$i['path']}}"> Preview</a><br>
+                                      </object>
+                                     
+                                      <a href="/download/{{$i['path']}}">   Download</a></td>
+                                      <td>
+                                          <a href="/docs/verify/{{$i['id']}}" style="color: rgb(0,123,255);"><button class="btn btn-success">&#10003;</button></a>
+                                          <a href="/docs/unverify/{{$i['id']}}" style="color: rgb(0,123,255);"><button class="btn btn-danger">&#10005;</button></a>
+                                     
+                                      
+                                      </td>
+                                  </tr>
+                                    @endif
+                                
                                 @endforeach
                                 <tr>
                                     

@@ -20,7 +20,7 @@
             Mail::send('email.lawyerWelcome', $data, function($message) use ($data) {
                 $message->to($data['email'], $data['name'])->subject
                     ('Welcome to the Web Portal');
-                $message->from('webportalforlawyers@gmail.com','Hatim');
+                $message->from('webportalforlawyers@gmail.com','Admin');
             });
             $user->welcome_email=1;
             $user->save();

@@ -147,7 +147,7 @@
                                   <div class="form-group row">
                                     <label for="colFormLabel" class="col-sm-3 col-form-label">Filing Date</label>
                                     <div class="col-sm-9">
-                                      <input type="Filing Date" class="form-control" id="colFormLabel" value="{{$item->filing_date}}" disabled>
+                                      <input type="Filing Date" class="form-control" id="colFormLabel" value="{{$item->date_of_filing}}" disabled>
                                     </div>
                                   </div>
                                   <div class="form-group row">

@@ -247,3 +247,7 @@ Route::post('/update/acts/{id}', 'PagesController@updateActs');
 Route::post('/update/petitioner/{id}', 'PagesController@updatePetitioner');
 Route::post('/update/respondent/{id}', 'PagesController@updateRespondent');
 Route::post('/add/hearing/{id}', 'PagesController@addHearing');
+
+Route::get('/view/hearing',function(){
+    return view('pages.demoHearinng');
+});

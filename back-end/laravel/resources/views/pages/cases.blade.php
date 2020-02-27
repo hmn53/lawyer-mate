@@ -238,6 +238,7 @@
                             <th>Case Category</th>
                             <th>Case Status</th>
                             <th>Date of Filing</th>
+                            <th>View</th>
                         </tr>
                     </thead>
                     <tbody> 
@@ -261,10 +262,11 @@
                             @endforeach
                           @endif
                          
-                          <td><a href="/cases/show/{{$info['id']}}">{{$info['description']}} </a></td>
+                          <td>{{$info['description']}}</td>
                           <td>{{$info['category']}} </td>
                           <td>{{$info['status']}} </td>
                           <td>{{$info['date_of_filing']}}</td>
+                          <td><a class="btn btn-primary btn-sm" href="/cases/show/{{$info['id']}}">View</a></td>
                           <?php $count+=1; ?>
                         </tr>
                       @endforeach

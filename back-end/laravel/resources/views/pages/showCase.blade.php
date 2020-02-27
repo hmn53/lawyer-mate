@@ -106,7 +106,7 @@
               </table>
               <br>
               <br>
-              <h2 class=" text-bold m-0 font-weight-normal">Case Status <span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_status">Update Status</button></h2>
+              <h2 class=" text-bold m-0 font-weight-normal">Case Status @if(strcmp($userType,'lawyer')==0)<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_status">Update Status</button>@endif</h2>
               <br>
                <table width="100%"  class="case_details_table" style="font-size:1em;">
                 <?php 
@@ -147,7 +147,7 @@
               </table>
               
               <br>
-              <h2 class=" text-bold m-0 font-weight-normal">Case Related Acts<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_acts">Update Acts</button></h2>
+              <h2 class=" text-bold m-0 font-weight-normal">Case Related Acts @if(strcmp($userType,'lawyer')==0)<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_acts">Update Acts</button>@endif</h2>
                 <br> 
               <table width="100%"  class="case_details_table" style="font-size:1em;">
                 <tbody>
@@ -164,7 +164,7 @@
               </table>
               
               <br>
-              <h2 class=" text-bold m-0 font-weight-normal">Petitioner<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_pdetails">Update Details</button></h2>
+              <h2 class=" text-bold m-0 font-weight-normal">Petitioner @if(strcmp($userType,'lawyer')==0)<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_pdetails">Update Details</button>@endif</h2>
               <br>
               <table width="100%" class="case_details_table" style="font-size:1em;">
                 <tbody>
@@ -179,7 +179,7 @@
               </table>
               <br>
     
-              <h2 class=" text-bold m-0 font-weight-normal">Respondent<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_rdetails">Update Details</button></h2>
+              <h2 class=" text-bold m-0 font-weight-normal">Respondent @if(strcmp($userType,'lawyer')==0)<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#update_rdetails">Update Details</button> @endif</h2>
               <br>
              <table width="100%" align="center" border="1" class="case_details_table" style="font-size:1em;">
                 <tbody>
@@ -242,7 +242,7 @@
                     $hearings = Hearing::where('case_id',$case['case_no'])->get();  
             ?>
               <br>
-              <h2 class=" text-bold m-0 font-weight-normal">History of all Hearings<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#upload_docs">Add Hearings</button></h2>
+              <h2 class=" text-bold m-0 font-weight-normal">History of all Hearings @if(strcmp($userType,'lawyer')==0)<span class="float-right"></span><button class="button button2 float-md-right " data-toggle="modal" data-target="#upload_docs">Add Hearings</button> @endif</h2>
               <br>
               <table width="100%"  class="case_details_table" style="font-size:1em;">
                 <tr>
@@ -250,7 +250,7 @@
                 <th>Description</th>
                   <th>Judgement</th>
                   <th>Comments</th>
-                  <th>View Details</th>
+                  {{-- <th>View Details</th> --}}
                 </tr>
                 @foreach ($hearings as $h)
                     
@@ -262,7 +262,7 @@
                   <td><label>{{$h->description}}</label></td>
                   <td><label>{{$h->judgement}}</label></td>
                   <td><label>{{$h->comments}}</label></td>
-                  <td><a href="/hearing/{{$h->id}}"><button type="button" class="button button2  p-2">View More</button></a></td>
+                  {{-- <td><a href="/view/hearing"><button type="button" class="button button2  p-2">View More</button></a></td> --}}
                 </strong>
               
                 </tr>

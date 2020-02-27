@@ -79,9 +79,9 @@ if(Auth::check()){
 
                     @auth
                     @if (strcmp($user->type,"lawyer")==0)
-                    <a class="nav-link " href="/reminder">reminder</a>
+                    <a class="nav-link " href="/reminder">add reminder</a>
                     @else
-                    <a class="nav-link " href="/appointment">appointments</a>
+                    <a class="nav-link " href="/appointment">set appointments</a>
                     @endif
 
                     @endauth
