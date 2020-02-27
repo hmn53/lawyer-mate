@@ -1,9 +1,14 @@
 @extends('layouts.app')
-
+<?php 
+    use App\LawyerProfile;
+    use App\CustomUser;
+    if(!isset($profiles))
+        $profiles = LawyerProfile::all();
+?>
 @section('content')
-    
 
-<main class="page landing-page">
+
+<main class="page landing-page" >
         <section class="clean-block clean-hero" style="background-image: url({{ asset('images/background.jpg') }});color: rgba(9, 162, 255, 0.85);">
                 <div class="text">
                         <h2>Web Portal for Lawyers</h2>
@@ -12,4 +17,6 @@
                 </div>
         </section>
 </main>
+
+
 @endsection

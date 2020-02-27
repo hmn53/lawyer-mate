@@ -27,7 +27,17 @@ if(Auth::check()){
                         @guest
                             <a class="nav-link active" href="/">Home</a>
                         @endguest
-
+                        @guest
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="/login">login</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="/register">signup</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="/search/lawyers">search lawyers</a>
+                            </li>
+                        @endguest
 
 
                 </li>
@@ -125,27 +135,30 @@ if(Auth::check()){
 
                 </li>
                 @guest
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="/login">login</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="/register">signup</a>
-                    </li>
+                    
                 @else
                 <li class="nav-item dropdown">
+                    <?php 
+                        $name = auth()->user()->name;
+                        
+                        $result = explode(" ", $name, 2);
+                        ?>
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
+                        {{ $result[0] }} <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right"style="text-align:center" aria-labelledby="navbarDropdown">
+                        @if (strcmp($user->type,"lawyer")==0)
                         <div class="btn-group d-flex justify-content-center" role="group" aria-label="....">
-                        <a class=" nav-link dropdown-item" href="/profile">
-                            Profile
-                        {{-- onclick="event.preventDefault();
-                                      document.getElementById('logout-form').submit();">
-                         {{ __('Logout') }} --}}
-                         </a>
-                        </div>
+                            <a class=" nav-link dropdown-item" href="/profile">
+                                Profile
+                            {{-- onclick="event.preventDefault();
+                                          document.getElementById('logout-form').submit();">
+                             {{ __('Logout') }} --}}
+                             </a>
+                            </div>
+                        @endif
+                        
 
                         <div class="btn-group d-flex justify-content-center" role="group" aria-label="....">
                          <a class=" nav-link dropdown-item" href="{{ route('logout') }}"

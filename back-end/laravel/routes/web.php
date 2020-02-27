@@ -55,8 +55,21 @@ Route::get('/lawyers', function () {
     return view('pages/lawyers');
 });
 Route::get('/appointment', function () {
-    return view('pages/appointment');
+    if(Auth::check())
+        return view('pages/appointment');
+    else
+        return redirect('/login');
 });
+
+Route::get('/request/appointment/{id}', function ($id) {
+    if(Auth::check())    
+        return view('pages/requestAppointment')->with('id',$id);
+    else
+        return redirect('/login');
+});
+
+Route::post('/request/appointment/{id}', 'PagesController@requestAppointment');
+
 
 Route::post('/appointment','PagesController@appointment');
 Route::post('/cases/add','PagesController@store');
@@ -199,6 +212,11 @@ Route::get('welcome/{id}', 'MailController@lawyerWelcome');
 //     else return view ('lawbook')->withMessage('No Details found. Try to search again !');
 // });
 Route::post('/search/lawbook','PagesController@searchLawbook');
+Route::get('/search/lawyers', function(){
+    return view('pages.searchLawyers');
+});
+Route::post('/search/lawyers','PagesController@searchLawyers');
+Route::post('/search/lawyers/category','PagesController@searchLawyersCategory');
 
 //test
 Route::get('/test', function () {
@@ -215,3 +233,17 @@ Route::get('/test', function () {
     return view('/dashboard');
     // return date('Y-d-m');
 });
+
+
+//search 
+Route::post('/search/cases', 'PagesController@searchCases');
+Route::post('/search/clients', 'PagesController@searchClients');
+Route::post('/search/clients', 'PagesController@searchCLawyers');
+
+//update
+
+Route::post('/update/status/{id}', 'PagesController@updateStatus');
+Route::post('/update/acts/{id}', 'PagesController@updateActs');
+Route::post('/update/petitioner/{id}', 'PagesController@updatePetitioner');
+Route::post('/update/respondent/{id}', 'PagesController@updateRespondent');
+Route::post('/add/hearing/{id}', 'PagesController@addHearing');

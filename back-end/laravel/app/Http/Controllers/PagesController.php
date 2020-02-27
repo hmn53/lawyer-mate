@@ -17,6 +17,7 @@ use Auth;
 use App\Appointment;
 use App\Directory;
 use App\LawyerProfile;
+use App\Hearing;
 
 class PagesController extends Controller
 {
@@ -123,12 +124,21 @@ class PagesController extends Controller
             $var->client_id= $id;
             $var->judge_name= $request->input('judgename');
             $var->court_type = $request->input('courttype');
+            $var->type = $request->input('type');
+            $var->court_number = $request->input('court_number');
+            $var->filing_number = $request->input('filing_number');
+            $var->registration_number = $request->input('registration_number');
+            $var->registration_date = $request->input('registration_date');
             $var->category = $request->input('category');
             $var->case_members = $request->input('casemembers');
+            $var->penal_code = $request->input('penal_code');
+            $var->petitioner = $request->input('petitioner');
+            $var->respondent = $request->input('respondent');
             $var->status = $request->input('status');
             $var->date_of_filing = $request->input('filingdate');
             $var->opponent = $request->input('opponent');
             $var->description = $request->input('description');
+            $var->comments = $request->input('comments');
             $var->summary = $request->input('summary');
             $var->background = $request->input('background');
             $var->save();
@@ -165,9 +175,14 @@ class PagesController extends Controller
                 'description' => 'required',
                 'date'=>'required',
             ]);
+            $lawyer_id = CustomUser::select('id')->where('name', $request->input('lawyer_name'))->get();
+            foreach($lawyer_id->all() as $id){
+                $l_id = $id->id;
+            }
             $var = new Appointment;
            $var->user_id =auth()->user()->id;
            $var->title = $request->input('title');
+           $var->lawyer_id = $l_id;
            $var->lawyer_name = $request->input('lawyer_name');
            $var->description = $request->input('description');
            $var->date = $request->input('date');
@@ -335,12 +350,13 @@ class PagesController extends Controller
     //profile
     public function updateprofile(Request $request,$id){
         $pro = LawyerProfile::where('user_id',$id)->get();
-        foreach($pro->all() as $p){
+            foreach($pro->all() as $p){
             $p->delete();
-        }
+            }
             $profile = new LawyerProfile;
             $profile->user_id = $id;
             $profile->city=$request->input('city');
+            $profile->name = $request->input('name');
             $profile->office_address=$request->input('office_address');
             $profile->office_phone=$request->input('office_phone');
             $profile->achievements=$request->input('achievements');
@@ -359,4 +375,112 @@ class PagesController extends Controller
         
         return redirect('/profile');
    }
+
+   public function requestAppointment(Request $request,$id){
+            $var = new Appointment;
+           $var->user_id = auth()->user()->id;
+           $var->title = $request->input('title');
+           $var->type = 'first';
+           $var->lawyer_id = $request->input('lawyer_id');
+           $var->lawyer_name = $request->input('name');
+           $var->description = $request->input('description');
+           $var->date = $request->input('date');
+           $var->save();
+           return redirect('/dashboard');
+}
+
+    public function searchLawyersCategory(Request $request){
+        $category = $request->input('category');
+        foreach($category as $c){
+            $ce = $c;
+        }
+        $profiles = LawyerProfile::where('area','LIKE','%' . $ce . '%')->get();
+        
+        return view('pages.searchLawyers')->with('profiles',$profiles);
+    }
+
+    public function searchLawyers(Request $request){
+        $search = $request->input('searchTerm');
+        
+        $profiles = LawyerProfile::where('area','LIKE','%' . $search . '%')->orWhere('name','LIKE','%' . $search . '%')->orWhere('city','LIKE','%' . $search . '%')->get();
+        
+        return view('pages.searchLawyers')->with('profiles',$profiles);
+    }
+
+    //Search
+    public function searchCases(Request $request){
+        $user = auth()->user();
+        $userType = $user->type;
+        $user_id = $user->id;
+        $search = $request->input('search');
+        if(strcmp($userType,"lawyer")==0)
+            $case_info = CaseTable::where('lawyer_id',$user_id)->where('case_no','LIKE','%' . $search . '%')->orWhere('description','LIKE','%' . $search . '%')->orWhere('category','LIKE','%' . $search . '%')->get();
+        else
+        $case_info = CaseTable::where('client_id',$user_id)->where('case_no','LIKE','%' . $search . '%')->orWhere('description','LIKE','%' . $search . '%')->orWhere('category','LIKE','%' . $search . '%')->get();
+        return view('pages.cases')->with('case_info',$case_info);
+    }
+    public function searchClients(Request $request){
+        $user = auth()->user();
+        $userType = $user->type;
+        $user_id = $user->id;
+        $search = $request->input('search');
+        $client = Client::where('lawyer_id',$user_id)->where('client_name','LIKE','%' . $search . '%')->orWhere('case_id','LIKE','%' . $search . '%')->get();
+        return view('pages.clients')->with('client',$client);
+    }
+    public function searchCLawyers(Request $request){
+        $user = auth()->user();
+        $userType = $user->type;
+        $user_id = $user->id;
+        $search = $request->input('search');
+        $lawyers = Client::where('client_id',$user_id)->where('client_name','LIKE','%' . $search . '%')->orWhere('case_id','LIKE','%' . $search . '%')->get();
+        return view('pages.lawyers')->with('lawyers',$lawyers);
+    }
+
+    //update
+    public function updateStatus(Request $request,$id){
+        $case = CaseTable::find($id);
+        $case->court_number = $request->input('court_number');
+        $case->judge_name = $request->input('judge_name');
+        $case->status = $request->input('status');
+        $case->save();
+        return redirect()->back();
+    }
+
+    public function updateActs(Request $request,$id){
+        $case = CaseTable::find($id);
+        $case->penal_code = $request->input('penal_code');
+        
+        $case->save();
+        return redirect()->back();
+    }
+    public function updatePetitioner(Request $request,$id){
+        $case = CaseTable::find($id);
+        $case->petitioner = $request->input('petitioner');
+        
+        $case->save();
+        return redirect()->back();
+    }
+    public function updateRespondent(Request $request,$id){
+        $case = CaseTable::find($id);
+        $case->respondent = $request->input('respondent');
+        
+        $case->save();
+        return redirect()->back();
+    }
+
+    public function addHearing(Request $request,$id){
+        $case = CaseTable::find($id);
+       $hearing = new Hearing;
+       $hearing->case_id=$case->case_no;
+       $hearing->judge_name = $request->input('judge_name');
+       $hearing->description = $request->input('description');
+       $hearing->judgement = $request->input('judgement');
+       $hearing->starting_date = $request->input('starting_date');
+       $hearing->ending_date = $request->input('ending_date');
+       $hearing->next_hearing_date = $request->input('next_hearing_date');
+       $hearing->comments = $request->input('comments');
+       $hearing->save();
+        return redirect()->back();
+    }
+
 }

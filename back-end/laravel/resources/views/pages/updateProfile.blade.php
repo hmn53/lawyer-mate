@@ -41,6 +41,12 @@
             <form action="/update/profile/{{$user_id}}" method="POST">
                 @csrf
                 <h3 style="text-align:center">Profile</h3>
+                <div class="form-group ">
+                  <label for="name" class=" col-form-label">Name</label>
+                  
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                  
+                </div>
                   <div class="form-group ">
                     <label for="description" class=" col-form-label">Description</label>
                     

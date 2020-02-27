@@ -155,12 +155,6 @@
 
     @endif
 
-    // {{-- <script>
-    //     $( '.navbar .container .navbar-collapse .navbar-nav li' ).on( 'click', function () {
-    //         $( '.navbar .container .navbar-collapse .navbar-nav' ).find( 'li.active' ).removeClass( 'active' );
-    //         $( this ).parent( 'li' ).addClass( 'active' );
-    //     });
-    // </script> --}}
     <script>
         $(document).ready(function() {
         var pathname = window.location.pathname;
@@ -169,7 +163,21 @@
         });
         
     </script>
-    
+    <script>
+        
+  $('.dataTables_length').addClass('bs-select');
+      $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+  
+      
+      </script>
+
     <script>
       $(document).ready(function() {
         var showChar = 200;

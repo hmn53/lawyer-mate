@@ -8,4 +8,5 @@ class Hearing extends Model
 {
     //
     protected $table = "hearing_status";
+    public $timestamps = false;
 }

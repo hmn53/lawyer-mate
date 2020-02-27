@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuinate\HTML;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class RegisterController extends Controller
 {
@@ -39,6 +41,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        Session::put('preUrl', URL::previous());
     }
 
     /**
@@ -71,5 +74,9 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function redirectTo()
+    {
+        return Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
     }
 }

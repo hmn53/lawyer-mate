@@ -103,7 +103,7 @@
                     <label for="name" class="col-form-label text-md-right">{{ __('Name') }}</label>
 
                     
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" pattern="[a-zA-Z][a-zA-Z ]{2,}" autofocus>
 
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
+                    <label for="password" class="col-form-label text-md-right">{{ __('Password') }} (min. 8 characters)</label>
 
                     
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">

@@ -12,7 +12,7 @@ $caseCount = CaseTable::where('lawyer_id',$userId)->count();
 $clientCount = Client::where('lawyer_id',$userId)->count();
 $docCount = 0;
 $reminderCount = Reminder::where('user_id',$userId)->count();
-$reminders = Reminder::where('user_id',$userId)->get();
+$reminders = Reminder::where('remind_date','>=',date('Y-d-m'))->where('user_id',$userId)->get();
 $clientsId = Client::select('client_id')->where('lawyer_id',$userId)->get();
 foreach ($casesId as $caseId) {
 $docCount += Doc::where('case_id',$caseId->case_no)->count();
@@ -28,9 +28,9 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
       <div class="row">
         <div class="col-md-3 ">
           <div class="card">
-            <div class="card-body">
-              <p class="card-title text-md-center text-xl-left">Cases</p>
-              <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+            <div class="card-body" style="text-align:center !important">
+              <p class="card-title text-md-center" style="font-size:16px" >Cases</p>
+              <div class="d-flex flex-wrap justify-content-between justify-content-md-center  align-items-center">
                 <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">{{$caseCount}}</h3>
                 <i class="ti-calendar icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
               </div>
@@ -40,9 +40,9 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
         </div>
         <div class="col-md-3 ">
           <div class="card">
-            <div class="card-body">
-              <p class="card-title text-md-center text-xl-left">Clients</p>
-              <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+            <div class="card-body"style="text-align:center !important">
+              <p class="card-title text-md-center" style="font-size:16px">Clients</p>
+              <div class="d-flex flex-wrap justify-content-between justify-content-md-center  align-items-center">
                 <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">{{$clientCount}}</h3>
                 <i class="ti-user icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
               </div>
@@ -52,9 +52,9 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
         </div>
         <div class="col-md-3 ">
           <div class="card">
-            <div class="card-body">
-              <p class="card-title text-md-center text-xl-left">Documents</p>
-              <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+            <div class="card-body"style="text-align:center !important">
+              <p class="card-title " style="font-size:16px">Documents</p>
+              <div class="d-flex flex-wrap justify-content-between justify-content-md-center  align-items-center">
                 <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">{{$docCount}}</h3>
                 <i class="ti-agenda icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
               </div>
@@ -64,9 +64,9 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
         </div>
         <div class="col-md-3 grid-margin stretch-card">
           <div class="card">
-            <div class="card-body">
-              <p class="card-title text-md-center text-xl-left">Reminders</p>
-              <div class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
+            <div class="card-body"style="text-align:center !important" >
+              <p class="card-title text-md-center "style="font-size:16px">Reminders</p>
+              <div class="d-flex flex-wrap justify-content-between justify-content-md-center  align-items-center">
                 <h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">{{$reminderCount}}</h3>
                 <i class="ti-layers-alt icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
               </div>
@@ -126,10 +126,13 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
       
         <div class="col-sm-6">
           <div class="card" style="height:auto;">
-            <div class="card-header" style="font-size:22px">Reminders</div>
+            <div class="card-header" style="font-size:22px">Upcoming Reminders</div>
             <div class="card-body" style="text-align:justify;">
 
               <div class="card-text">
+                @if(count($reminders)==0)
+                  <p style="text-align:center"><em>No Reminder Found!</em><p>
+                @endif
                 @foreach ($reminders->all() as $item)
                 <?php
                   $case = CaseTable::where('case_no',$item->case_no)->get();
@@ -148,7 +151,9 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
                   </div>
                   </div>
                 </div>
-                
+                @if (count($reminders)>1)
+                  <hr>
+                @endif
                 @endforeach
                 
               </div>
@@ -158,10 +163,13 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
         </div>
         <div class="col-sm-6">
           <div class="card" style="height:auto;">
-            <div class="card-header" style="font-size:22px">Appointments</div>
+            <div class="card-header" style="font-size:22px">Upcoming Appointments</div>
             <div class="card-body" style="text-align:justify;">
              
               <div class="card-text">
+                @if(count($appointments)==0)
+                <p style="text-align:center"><em>No Appointments!</em><p>
+                @endif
                 @foreach ($appointments as $item)
                 @if (strcmp($item['accepted'],"rejected")!=0)
                 <?php 
@@ -188,7 +196,9 @@ $appointments = Appointment::where('lawyer_name',$user->name)->get();
                   </div>
                   </div>
                 </div>
-                <hr>
+                  @if (count($appointments)>1)
+                    <hr>
+                  @endif
                 @endif
                 @endforeach
                 

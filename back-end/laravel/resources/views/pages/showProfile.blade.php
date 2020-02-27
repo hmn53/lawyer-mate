@@ -1,10 +1,11 @@
 @extends('layouts/app')
 <?php  
     use App\LawyerProfile;
-    $user = auth()->user();
-    $user_id = $user->id;
-    if(!isset($profilerofile))
+    use App\CustomUser;
+    
+    if(!isset($profile))
         return redirect('/dashboard');
+    $user = CustomUser::find($profile->user_id); 
 ?>
 @section('content')
 
@@ -113,7 +114,6 @@
                         <input type="text" class="form-control form-control-lg" id="colFormLabelLg" value="{{$profile->mobile_phone}}">
                         </div>
                     </div>
-                    
                 </fieldset>
             </form>
        
@@ -154,7 +154,7 @@
                           
                     </fieldset>
                   </form>
-                  
+                  <button class="btn btn-primary" ><a href="/request/appointment/{{$profile->user_id}}" style="color:white;text-decoration:none">Request Lawyer</a></button>
                 </div>
             </div>
         </div>

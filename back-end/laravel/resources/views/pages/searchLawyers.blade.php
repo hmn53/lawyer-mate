@@ -1,11 +1,25 @@
-@extends('layouts/app')
+@extends('layouts.app')
 <?php 
     use App\LawyerProfile;
     use App\CustomUser;
-    $profiles = LawyerProfile::all();
+    if(!isset($profiles))
+        $profiles = LawyerProfile::all();
 ?>
 @section('content')
-    <style>
+
+@include('includes.newnavbar');
+
+{{-- <main class="page landing-page">
+        <section class="clean-block clean-hero" style="background-image: url({{ asset('images/background.jpg') }});color: rgba(9, 162, 255, 0.85);">
+                <div class="text">
+                        <h2>Web Portal for Lawyers</h2>
+                        <p>Get started now.</p>
+                        <button class="btn btn-outline-light btn-lg" type="button"><a href="/register" style="text-decoration: none; color:white;">Register</a></button>
+                </div>
+        </section>
+</main> --}}
+
+<style>
         @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 .main-container{
@@ -180,7 +194,7 @@ a.morelink {
         }
     </style>
     <div class="wrap" >
-    <form id="search" method="POST" action="/search/lawbook" style="margin:0; padding:0">
+    <form id="search" method="POST" action="/search/lawyers" style="margin:0; padding:0">
         {{ csrf_field() }}
         <div class="search">
         <input type="text" class="searchTerm" name="searchTerm" placeholder="Search Lawyers...">
@@ -197,15 +211,12 @@ a.morelink {
                 <div class="card-header">Categories</div>
                 <div class="card-body">
                     
-                        
+                        <form method="POST" action="/search/lawyers/category">
+                                {{ csrf_field() }}
                             <div class="input-group-text">
                                 <label><input type="checkbox" value="Criminal" name="category[]"> Criminal</label>
                             </div>
                        
-                        
-                    
-                    
-                        
                             <div class="input-group-text">
                                 <label><input type="checkbox" value="Civil" name="category[]"> Civil</label>
                             </div>
@@ -249,8 +260,11 @@ a.morelink {
                             <div class="input-group-text">
                                 <label><input type="checkbox" value="Consumer Protection" name="category[]"> Consumer Protection</label>
                             </div>
-                        
-                        
+                            <br>
+                            <div>
+                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
             </div>
             <br>
@@ -259,6 +273,9 @@ a.morelink {
         </div>
         <div class="col-sm-7">
             <div class="jumbotron">
+                @if(count($profiles)==0)
+                    <h5>No Lawyers Found!</h5>
+                @endif
                 @foreach ($profiles->all() as $profile)
                     <?php 
                         $user = CustomUser::find($profile->user_id);
@@ -268,7 +285,7 @@ a.morelink {
                             <h5 class="card-title">{{$user->name}}</h5>
                             <p class="card-text">Category : {{$profile->area}}<br>
                                 City: {{$profile->city}}</p>
-                            <a href="" class="btn btn-primary">View Profile</a>
+                            <a href="/show/profile/{{$profile->id}}" class="btn btn-primary">View Profile</a>
                         </div>
                     </div>
                 @endforeach
