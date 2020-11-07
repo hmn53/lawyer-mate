@@ -26,11 +26,11 @@ REDIS_PORT=6379
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.googlemail.com
 MAIL_PORT=587
-MAIL_USERNAME=webportalforlawyers@gmail.com
-MAIL_PASSWORD=wvzfhhbihdpchtlk
+MAIL_USERNAME=
+MAIL_PASSWORD=
 MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=webportalforlawyers@gmail.com
-MAIL_FROM_NAME=Hatim
+MAIL_FROM_ADDRESS=
+MAIL_FROM_NAME=
 
 MAILGUN_DOMAIN= https://api.mailgun.net/v3/sandboxb99246050f734578b474e71a69bb778e.mailgun.org
 MAILGUN_SECRET= c9569cec6426b4ccd6c372fb9704ca0f-9dfbeecd-0059e6a6
