@@ -17,7 +17,7 @@ This is a web portal built with Laravel for lawyers and users. Lawyers can log i
 - Add case details: Lawyers can add details about a case and update the status of a case.
 
 ## Installation
-1. Clone the repository to your local machine using `git clone https://github.com/hmn53/web-portal.git`
+1. Clone the repository to your local machine using `git clone https://github.com/hmn53/portal-for-lawyers.git`
 2. Navigate to the project directory and run `composer install` to install the project dependencies.
 3. Copy the `.env.example` file to a new file called `.env` and update the database configuration with your own values.
 4. Generate an application key by running `php artisan key:generate`.
