@@ -1,6 +1,6 @@
-# Web Portal for Lawyers
+# lawyer-mate
 
-This is a web portal built with Laravel for lawyers and users. Lawyers can log in, accept user case requests, accept appointments, view their upcoming events, and add case details and update case status. Users can find lawyers based on location or specialty, request lawyers, and book appointments with lawyers.
+A collaborative platform for lawyers and clients, built with Laravel, offering efficient case management, appointment booking, and lawyer-client interactions.
 
 ## Table of Contents
 - [Features](#features)
